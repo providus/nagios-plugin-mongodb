@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #
 # A MongoDB Nagios check script
@@ -26,8 +26,6 @@
 # See the README.md
 #
 
-from __future__ import print_function
-from __future__ import division
 import sys
 import time
 import optparse
@@ -1161,9 +1159,9 @@ def check_queries_per_second(con, query_type, warning, critical, perf_data, mong
 
             # update the count now
             if mongo_version == 2:
-                db.nagios_check.update({u'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
+                db.nagios_check.update({'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
             else:
-                db.nagios_check.update_one({u'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
+                db.nagios_check.update_one({'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
 
             message = "Queries / Sec: %f" % query_per_sec
             message += performance_data(perf_data, [(query_per_sec, "%s_per_sec" % query_type, warning, critical, message)])
@@ -1173,9 +1171,9 @@ def check_queries_per_second(con, query_type, warning, critical, perf_data, mong
             query_per_sec = 0
             message = "First run of check.. no data"
             if mongo_version == 2:
-                db.nagios_check.update({u'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
+                db.nagios_check.update({'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
             else:
-                db.nagios_check.update_one({u'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
+                db.nagios_check.update_one({'_id': last_count['_id']}, {'$set': {"data.%s" % query_type: {'count': num, 'ts': int(time.time())}}})
 
         except TypeError:
             #
